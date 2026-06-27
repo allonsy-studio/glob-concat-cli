@@ -3,13 +3,13 @@
   "version": "1.0.1",
   "description": "A concatenation tool leveraging fast-glob for CLIs",
   "license": "Apache-2.0",
-  "author": "Cassondra Roberts <castastrophe@users.noreply.github.com> (https://allons-y.llc)",
+  "author": "Cassondra Roberts <castastrophe@users.noreply.github.com> (https://allons-y.studio)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/castastrophe/glob-concat-cli.git"
+    "url": "https://github.com/allonsy-studio/glob-concat-cli.git"
   },
   "bugs": {
-    "url": "https://github.com/castastrophe/glob-concat-cli/issues"
+    "url": "https://github.com/allonsy-studio/glob-concat-cli/issues"
   },
   "type": "module",
   "module": "index.js",
