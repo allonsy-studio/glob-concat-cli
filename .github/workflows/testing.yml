@@ -52,7 +52,7 @@ jobs:
 
       - name: Run coverage report
         run: yarn coverage
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: coverage-data-${{ github.run_id }}
           path: |
@@ -64,7 +64,7 @@ jobs:
           format: "markdown"
           output: "both"
       - name: Add coverage PR comment
-        uses: marocchino/sticky-pull-request-comment@v2.9.4
+        uses: marocchino/sticky-pull-request-comment@v3.0.4
         with:
           recreate: true
           path: code-coverage-results.md
@@ -114,7 +114,7 @@ jobs:
 
       - name: Get changed files
         id: changed-files
-        uses: step-security/changed-files@v46
+        uses: step-security/changed-files@v47
         with:
           files_yaml: |
             eslint:
@@ -133,7 +133,7 @@ jobs:
           reporter: github-pr-review
           filter_mode: diff_context
           #   eslint_flags: "components/*/stories/*.js"
-          eslint_flags: "--config ${{ github.workspace }}/.eslintrc ${{ steps.changed-files.outputs.eslint_added_files }} ${{ steps.changed-files.outputs.eslint_modified_files }}"
+          eslint_flags: "--config ${{ github.workspace }}/eslint.config.js ${{ steps.changed-files.outputs.eslint_added_files }} ${{ steps.changed-files.outputs.eslint_modified_files }}"
 
       - name: Run markdownlint on documentation
         uses: reviewdog/action-markdownlint@v0.26.2
