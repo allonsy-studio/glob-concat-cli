@@ -1,3 +1,6 @@
+<!-- weaver:banner:START -->
+<!-- weaver:banner:END -->
+
 <img src="https://repository-images.githubusercontent.com/690650165/91f13310-76b3-43ff-b7ab-53daa21a90ce" alt=""/>
 
 # glob-concat-cli
