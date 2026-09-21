@@ -13,7 +13,7 @@ ESM only, Node >= 22.21, Yarn 4.
 | Path        | Purpose                                                          |
 | ----------- | ---------------------------------------------------------------- |
 | `index.js`  | The whole library. Default export does the work; also exports `MESSAGES`. |
-| `cli.js`    | yargs wrapper: the `glob-concat` bin. Argument parsing only.     |
+| `cli.js`    | yargs wrapper, the `glob-concat` bin. Argument parsing only.     |
 | `test.js`   | The whole AVA suite.                                              |
 | `fixtures/` | Input files (CSS & markdown, including an intentionally empty one). |
 | `expected/` | Expected output, compared as exact strings.                       |
@@ -45,11 +45,11 @@ New behavior gets a fixture, an expected file, and a case in `test.js`.
 ## Conventions
 
 - Keep code self-documenting. When a comment is warranted, keep it brief and explain
-  only the *why* the code can't show: never restate what the code does.
+  only the *why* the code can't show; never restate what the code does.
 - husky + lint-staged run on commit and commitlint checks the message. Don't bypass
   with `--no-verify`.
 - README sections between `weaver:*:START` / `weaver:*:END` markers are auto-generated
-  by Weaver: never edit inside them.
+  by Weaver; never edit inside them.
 
 ## Commits, releases & pull requests
 
@@ -59,7 +59,7 @@ of the org). That means the commit type drives the version bump: `feat` → mino
 verbatim into the release notes. Write the body for a human reader.
 
 Conventional Commits, enforced by commitlint: `<type>(<optional-scope>): <imperative
-subject>`: lowercase, no trailing period. Fill in
+subject>`, lowercase, no trailing period. Fill in
 [`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md); see
 [`.github/CONTRIBUTING.md`](.github/CONTRIBUTING.md) for the full flow.
 
