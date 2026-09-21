@@ -18,8 +18,8 @@
   },
   "scripts": {
     "coverage": "c8 yarn test",
-    "lint": "prettier --config .prettierrc --check . && eslint --cache --no-error-on-unmatched-pattern --report-unused-disable-directives . && markdownlint --config .markdownlint.json *.md --ignore node_modules",
-    "lint:fix": "prettier --config .prettierrc --write . && eslint --fix --cache --no-ignore --no-error-on-unmatched-pattern . && prettier-package-json --write package.json && markdownlint --config .markdownlint.json --fix *.md --ignore node_modules",
+    "lint": "prettier --config .prettierrc --check . && eslint --cache --no-error-on-unmatched-pattern --report-unused-disable-directives .",
+    "lint:fix": "prettier --config .prettierrc --write . && eslint --fix --cache --no-ignore --no-error-on-unmatched-pattern . && prettier-package-json --write package.json",
     "postinstall": "husky || true",
     "precommit": "commitlint --edit \"\" && lint-staged --allow-empty --config lint-staged.config.js",
     "prepublishOnly": "yarn test",
@@ -36,6 +36,7 @@
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
     "@eslint/js": "^10.0.1",
+    "@eslint/markdown": "^8.0.2",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/git": "^10.0.1",
@@ -50,8 +51,6 @@
     "husky": "^9.1.7",
     "jsonc-eslint-parser": "^3.1.0",
     "lint-staged": "^16.4.0",
-    "markdownlint": "^0.40.0",
-    "markdownlint-cli": "^0.48.0",
     "mock-fs": "^5.5.0",
     "prettier": "^3.8.3",
     "prettier-package-json": "^2.8.0",
@@ -86,7 +85,7 @@
     ],
     "*.md": [
       "prettier --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write --config .prettierrc",
-      "markdownlint --config .markdownlint.json --fix"
+      "eslint --fix --no-error-on-unmatched-pattern"
     ],
     ".github/renovate.json": [
       "yarn dlx --package renovate -- renovate-config-validator"
