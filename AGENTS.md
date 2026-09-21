@@ -10,14 +10,14 @@ ESM only, Node >= 22.21, Yarn 4.
 
 ## Layout
 
-| Path        | Purpose                                                          |
-| ----------- | ---------------------------------------------------------------- |
+| Path        | Purpose                                                                   |
+| ----------- | ------------------------------------------------------------------------- |
 | `index.js`  | The whole library. Default export does the work; also exports `MESSAGES`. |
-| `cli.js`    | yargs wrapper, the `glob-concat` bin. Argument parsing only.     |
-| `test.js`   | The whole AVA suite.                                              |
-| `fixtures/` | Input files (CSS & markdown, including an intentionally empty one). |
-| `expected/` | Expected output, compared as exact strings.                       |
-| `COPYRIGHT` | The license header text.                                          |
+| `cli.js`    | yargs wrapper, the `glob-concat` bin. Argument parsing only.              |
+| `test.js`   | The whole AVA suite.                                                      |
+| `fixtures/` | Input files (CSS & markdown, including an intentionally empty one).       |
+| `expected/` | Expected output, compared as exact strings.                               |
+| `COPYRIGHT` | The license header text.                                                  |
 
 Keep argument parsing in `cli.js` and behavior in `index.js`. Anything worth testing
 belongs on the `index.js` side, because that's what the suite drives.
@@ -45,7 +45,7 @@ New behavior gets a fixture, an expected file, and a case in `test.js`.
 ## Conventions
 
 - Keep code self-documenting. When a comment is warranted, keep it brief and explain
-  only the *why* the code can't show; never restate what the code does.
+  only the _why_ the code can't show; never restate what the code does.
 - husky + lint-staged run on commit and commitlint checks the message. Don't bypass
   with `--no-verify`.
 - README sections between `weaver:*:START` / `weaver:*:END` markers are auto-generated
