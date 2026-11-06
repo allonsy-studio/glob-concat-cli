@@ -62,7 +62,7 @@
     "globbing"
   ],
   "engines": {
-    "node": ">=22.21.0"
+    "node": ">=24"
   },
   "publishConfig": {
     "access": "public",
