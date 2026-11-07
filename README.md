@@ -31,7 +31,7 @@ npm install --dev glob-concat-cli
 yarn add --dev glob-concat-cli
 ```
 
-Currently, this project supports node v22 and v24. We plan to deprecate support for node v22 by March of 2026.
+This project supports Node 24 & 26. Node 22 is no longer supported: it entered maintenance on 2025-10-21 & reaches end of life on 2027-04-30. Support follows the [Node.js release schedule](https://github.com/nodejs/Release#release-schedule): Node 24 (in maintenance since 2026-10-20) is supported until its end of life on 2028-04-30, & Node 26 (LTS since 2026-10-28) until 2029-04-30.
 
 ## API
 
