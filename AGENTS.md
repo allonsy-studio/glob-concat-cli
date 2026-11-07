@@ -53,10 +53,11 @@ New behavior gets a fixture, an expected file, and a case in `test.js`.
 
 ## Commits, releases & pull requests
 
-Releases are automated by **semantic-release** on `main` (not Changesets, unlike most
-of the org). That means the commit type drives the version bump: `feat` → minor,
-`fix` → patch, a `BREAKING CHANGE:` footer → major, and the commit body is lifted
-verbatim into the release notes. Write the body for a human reader.
+Releases go through **Changesets** on `main`, as in most of the org. A change a consumer
+would notice needs a changeset (`yarn changeset`): the bump type & the summary you write
+become the changelog entry, so write the summary for a human reader. Merging to `main`
+opens a "Version Packages" pull request; merging that publishes to npm. Docs, tests, CI,
+& internal refactors need none.
 
 Conventional Commits, enforced by commitlint: `<type>(<optional-scope>): <imperative
 subject>`, lowercase, no trailing period. Fill in
