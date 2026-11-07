@@ -1,8 +1,8 @@
 {
   "name": "glob-concat-cli",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "A concatenation tool leveraging fast-glob for CLIs",
-  "license": "MPL-2.0",
+  "license": "Apache-2.0",
   "author": "Cassondra Roberts <castastrophe@users.noreply.github.com> (https://allons-y.studio)",
   "repository": {
     "type": "git",
@@ -17,14 +17,16 @@
     "glob-concat": "./cli.js"
   },
   "scripts": {
+    "changeset": "changeset",
     "coverage": "c8 yarn test",
-    "lint": "prettier --config .prettierrc --check . && eslint --cache --no-error-on-unmatched-pattern --report-unused-disable-directives . && markdownlint --config .markdownlint.json *.md --ignore node_modules",
-    "lint:fix": "prettier --config .prettierrc --write . && eslint --fix --cache --no-ignore --no-error-on-unmatched-pattern . && prettier-package-json --write package.json && markdownlint --config .markdownlint.json --fix *.md --ignore node_modules",
+    "lint": "prettier --config .prettierrc --check . && eslint --cache --no-error-on-unmatched-pattern --report-unused-disable-directives .",
+    "lint:fix": "prettier --config .prettierrc --write . && eslint --fix --cache --no-ignore --no-error-on-unmatched-pattern . && prettier-package-json --write package.json",
     "postinstall": "husky || true",
     "precommit": "commitlint --edit \"\" && lint-staged --allow-empty --config lint-staged.config.js",
     "prepublishOnly": "yarn test",
-    "semantic-release": "semantic-release",
-    "test": "ava"
+    "release": "changeset publish",
+    "test": "ava",
+    "version": "changeset version && yarn install --mode update-lockfile"
   },
   "dependencies": {
     "chalk": "^5.6.2",
@@ -33,17 +35,13 @@
     "yargs": "^18.0.0"
   },
   "devDependencies": {
+    "@changesets/cli": "^3.0.3",
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
     "@eslint/js": "^10.0.1",
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/commit-analyzer": "^13.0.1",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^12.0.6",
-    "@semantic-release/npm": "^13.1.5",
-    "@semantic-release/release-notes-generator": "^14.1.0",
+    "@eslint/markdown": "^8.0.2",
     "ava": "^7.0.0",
-    "c8": "^11.0.0",
+    "c8": "^12.0.0",
     "eslint": "^10.2.1",
     "eslint-plugin-jsonc": "^3.1.2",
     "globals": "^17.0.0",
@@ -54,8 +52,7 @@
     "markdownlint-cli": "^0.48.0",
     "mock-fs": "^5.5.0",
     "prettier": "^3.8.3",
-    "prettier-package-json": "^2.8.0",
-    "semantic-release": "^25.0.3"
+    "prettier-package-json": "^2.8.0"
   },
   "keywords": [
     "cli",
@@ -63,11 +60,14 @@
     "globbing"
   ],
   "engines": {
-    "node": ">=22.21.0"
+    "node": ">=24"
   },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "ava": {
+    "workerThreads": false
   },
   "funding": [
     {
@@ -86,7 +86,7 @@
     ],
     "*.md": [
       "prettier --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write --config .prettierrc",
-      "markdownlint --config .markdownlint.json --fix"
+      "eslint --fix --no-error-on-unmatched-pattern"
     ],
     ".github/renovate.json": [
       "yarn dlx --package renovate -- renovate-config-validator"

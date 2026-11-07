@@ -67,7 +67,7 @@ yarn coverage
 
 Test coverage will also be run automatically on pull requests and reported in the pull request status.
 
-Commit changes with a [conventional commit message](https://www.conventionalcommits.org), making sure to correctly use `feat:`, `fix:`, and `BREAKING CHANGE` accordingly, and referencing the relevant issue number (if any):
+Commit changes with a [conventional commit message](https://www.conventionalcommits.org), referencing the relevant issue number (if any). The commit type no longer sets the version: add a changeset with `yarn changeset` for any change a consumer would notice.
 
 ```shell
 git commit -m "fix: issue with base64 conversion, fixes #252"

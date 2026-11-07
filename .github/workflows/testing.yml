@@ -3,13 +3,19 @@ name: Testing
 on:
   pull_request:
     types: [opened, synchronize, reopened]
+  merge_group:
 
 jobs:
   test:
+    name: CI (node${{ matrix.node }})
+    permissions:
+      contents: read
+      pull-requests: write
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        node-version: [22, 24]
+        node: [26, 24]
     steps:
       - name: Check out code
         uses: actions/checkout@v6
@@ -17,58 +23,47 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
 
-      - name: Use Node LTS version
+      - name: Use Node ${{ matrix.node }}
         uses: actions/setup-node@v6
         with:
           cache: yarn
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ matrix.node }}
 
       - name: Install dependencies
         run: yarn install --immutable
 
       - name: Run test suite
+        if: matrix.node != 26
         run: yarn test
 
-  coverage:
-    permissions:
-      pull-requests: write
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [24]
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Enable Corepack
-        run: corepack enable
-
-      - uses: actions/setup-node@v6
-        with:
-          cache: yarn
-          node-version: ${{ matrix.node-version }}
-
-      - name: Install dependencies
-        run: yarn install --immutable
-
       - name: Run coverage report
+        if: matrix.node == 26
         run: yarn coverage
+
       - uses: actions/upload-artifact@v7
+        if: matrix.node == 26
         with:
           name: coverage-data-${{ github.run_id }}
           path: |
             coverage/**/*.json
+
       - name: Coverage summary
+        if: matrix.node == 26
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
           filename: coverage/cobertura-coverage.xml
           format: "markdown"
           output: "both"
+
       - name: Add coverage PR comment
+        if: matrix.node == 26
         uses: marocchino/sticky-pull-request-comment@v3.0.4
         with:
           recreate: true
           path: code-coverage-results.md
+
       - name: Write to job summary
+        if: always() && matrix.node == 26
         run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
 
   # --- Lint pre-compiled assets for consistency --- #
@@ -77,6 +72,7 @@ jobs:
     timeout-minutes: 5
     permissions:
       contents: read
+      pull-requests: write
     strategy:
       matrix:
         node-version: [24]
@@ -119,10 +115,6 @@ jobs:
           files_yaml: |
             eslint:
               - '*.js'
-            mdlint:
-              - '*.md'
-              - '!expected/**'
-              - '!fixtures/**'
 
       - name: Run eslint
         uses: reviewdog/action-eslint@v1.34.0
