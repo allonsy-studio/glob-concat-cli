@@ -1,26 +1,31 @@
-import mock from "mock-fs";
-
-import fs from "fs";
-import { join } from "path";
+import fs, { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 import test from "ava";
 
 import globConcat, { MESSAGES } from "./index.js";
 
+const ROOT = process.cwd();
+let work;
+
+/** Read a committed expectation. */
 function readFile(filename) {
-	return mock.bypass(() =>
-		fs.readFileSync(join(process.cwd(), filename), "utf-8"),
-	);
+	return readFileSync(join(ROOT, filename), "utf-8");
 }
 
 test.beforeEach(() => {
-	mock({
-		"./fixtures": mock.load("./fixtures", { recursive: true }),
-		"./expected": {},
-	});
+	work = mkdtempSync(join(tmpdir(), "glob-concat-"));
+	cpSync(join(ROOT, "fixtures"), join(work, "fixtures"), { recursive: true });
+	mkdirSync(join(work, "expected"));
+	process.chdir(work);
 });
 
-test("concatenate two files", async (t) => {
+test.afterEach.always(() => {
+	process.chdir(ROOT);
+	rmSync(work, { recursive: true, force: true });
+});
+test.serial("concatenate two files", async (t) => {
 	return (
 		globConcat(
 			["./fixtures/file-1.md", "./fixtures/file-2.md"],
@@ -42,7 +47,7 @@ test("concatenate two files", async (t) => {
 	);
 });
 
-test("concatenate with globs", async (t) => {
+test.serial("concatenate with globs", async (t) => {
 	const output = "./expected/concat.md";
 	return (
 		globConcat(["./fixtures/*.md"], output, { fs: fs })
@@ -52,7 +57,7 @@ test("concatenate with globs", async (t) => {
 					2,
 					"number of input files found matches expected",
 				);
-				t.is(result.content, readFile(output), "content matches");
+				t.is(result.content, readFile("./expected/concat.md"), "content matches");
 				t.assert(result.map, "sourcemap exists");
 			})
 			// No errors should be thrown, so fail the test if one is
@@ -62,7 +67,7 @@ test("concatenate with globs", async (t) => {
 	);
 });
 
-test("concatenate with globs to stdout", async (t) => {
+test.serial("concatenate with globs to stdout", async (t) => {
 	return (
 		globConcat(["./fixtures/*.css"], undefined, { fs: fs })
 			.then((result) => {
@@ -85,14 +90,14 @@ test("concatenate with globs to stdout", async (t) => {
 	);
 });
 
-test("empty file with error", async (t) => {
+test.serial("empty file with error", async (t) => {
 	const output = "./expected/concat.md";
 	return globConcat(["./fixtures/file-empty.md"], output, {
 		allowEmpty: false,
 		fs: fs,
 	})
 		.then((result) => {
-			t.is(result.content, readFile(output), "content matches");
+			t.is(result.content, readFile("./expected/concat.md"), "content matches");
 			t.assert(result.map, "sourcemap content matches");
 		})
 		.catch((error) => {
@@ -103,14 +108,10 @@ test("empty file with error", async (t) => {
 		});
 });
 
-test("no file input provided to script", async (t) => {
+test.serial("no file input provided to script", async (t) => {
 	return globConcat([], undefined, { allowEmpty: false, fs: fs })
 		.then(() => t.fail("no input files should throw an error"))
 		.catch((error) => {
 			t.is(error.message, MESSAGES.no_input_files);
 		});
-});
-
-test.afterEach(() => {
-	mock.restore();
 });
