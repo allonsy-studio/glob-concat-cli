@@ -51,5 +51,6 @@ jobs:
           version: yarn run version
           publish: yarn release
           commitMode: github-api
+          createGithubReleases: false
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}

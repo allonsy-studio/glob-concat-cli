@@ -17,16 +17,16 @@
     "glob-concat": "./cli.js"
   },
   "scripts": {
-    "changeset": "changeset",
+    "changeset": "opx release add",
     "coverage": "c8 yarn test",
     "lint": "prettier --config .prettierrc --check . && eslint --cache --no-error-on-unmatched-pattern --report-unused-disable-directives .",
     "lint:fix": "prettier --config .prettierrc --write . && eslint --fix --cache --no-ignore --no-error-on-unmatched-pattern . && prettier-package-json --write package.json",
     "postinstall": "husky || true",
     "precommit": "commitlint --edit \"\" && lint-staged --allow-empty --config lint-staged.config.js",
     "prepublishOnly": "yarn test",
-    "release": "changeset publish",
+    "release": "opx release publish",
     "test": "ava",
-    "version": "changeset version && yarn install --mode update-lockfile"
+    "version": "opx release version && yarn install --mode update-lockfile"
   },
   "dependencies": {
     "chalk": "^5.6.2",
@@ -35,7 +35,8 @@
     "yargs": "^18.0.0"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.31.1",
+    "@allons-y/opx-cli": "^0.2.0",
+    "@allons-y/opx-release": "^0.1.1",
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
     "@eslint/js": "^10.0.1",
