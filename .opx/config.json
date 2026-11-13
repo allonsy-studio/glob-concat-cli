@@ -1,0 +1,6 @@
+{
+	"$schema": "https://unpkg.com/@allons-y/opx/schema/config.json",
+	"version": 1,
+	"release": true,
+	"test": false
+}
