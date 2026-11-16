@@ -59,6 +59,8 @@ become the changelog entry, so write the summary for a human reader. Merging to 
 opens a "Version Packages" pull request; merging that publishes to npm. Docs, tests, CI,
 & internal refactors need none.
 
+Pull requests are squash-merged: the PR title becomes the commit subject & the commit messages its body, so the title must be a valid Conventional Commits subject.
+
 Conventional Commits, enforced by commitlint: `<type>(<optional-scope>): <imperative
 subject>`, lowercase, no trailing period. Fill in
 [`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md); see
