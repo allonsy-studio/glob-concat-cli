@@ -27,8 +27,8 @@ belongs on the `index.js` side, because that's what the suite drives.
 ```sh
 yarn test        # ava
 yarn coverage    # c8 over the suite
-yarn lint        # prettier --check, eslint, markdownlint
-yarn lint:fix    # the same three with --write / --fix
+yarn lint        # opx lint: ESLint over JS, JSON, and Markdown
+yarn format      # opx lint --fix
 ```
 
 ## Testing

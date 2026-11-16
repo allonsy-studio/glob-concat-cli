@@ -152,8 +152,8 @@ export default async function (
 			.catch((e) => !allowEmpty && Promise.reject(e));
 	}
 
-	let content = concat.content?.toString()?.trim() + "\n";
-	const sourcemap = concat.sourceMap ? concat.sourceMap + "\n" : "";
+	let content = `${concat.content?.toString()?.trim()}\n`;
+	const sourcemap = concat.sourceMap ? `${concat.sourceMap}\n` : "";
 
 	if (!isEmpty(content)) {
 		/** Return the content without the inline'ed sourcemap b/c the sourcemap is returned separately */

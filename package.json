@@ -19,10 +19,9 @@
   "scripts": {
     "changeset": "opx release add",
     "coverage": "c8 yarn test",
-    "lint": "prettier --config .prettierrc --check . && eslint --cache --no-error-on-unmatched-pattern --report-unused-disable-directives .",
-    "lint:fix": "prettier --config .prettierrc --write . && eslint --fix --cache --no-ignore --no-error-on-unmatched-pattern . && prettier-package-json --write package.json",
-    "postinstall": "husky || true",
-    "precommit": "commitlint --edit \"\" && lint-staged --allow-empty --config lint-staged.config.js",
+    "format": "opx lint --fix",
+    "lint": "opx lint",
+    "prepare": "husky",
     "prepublishOnly": "yarn test",
     "release": "opx release publish",
     "test": "ava",
@@ -36,18 +35,15 @@
   },
   "devDependencies": {
     "@allons-y/opx-cli": "^0.2.0",
+    "@allons-y/opx-lint-js": "^1.0.0",
+    "@allons-y/opx-lint-json": "^0.1.0",
+    "@allons-y/opx-lint-md": "^0.1.0",
     "@allons-y/opx-release": "^0.1.1",
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
-    "@eslint/js": "^10.0.1",
-    "@eslint/markdown": "^8.0.2",
     "ava": "^7.0.0",
     "c8": "^12.0.0",
-    "eslint": "^10.2.1",
-    "eslint-plugin-jsonc": "^3.1.2",
-    "globals": "^17.0.0",
     "husky": "^9.1.7",
-    "jsonc-eslint-parser": "^3.1.0",
     "lint-staged": "^16.4.0",
     "prettier": "^3.8.3",
     "prettier-package-json": "^2.8.0"
@@ -78,13 +74,11 @@
     }
   ],
   "lint-staged": {
-    "!(*renovate|package).{js,json}": [
-      "prettier --write",
-      "eslint --fix --cache --no-error-on-unmatched-pattern"
+    "*.{js,json}": [
+      "opx lint --fix"
     ],
-    "*.md": [
-      "prettier --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write --config .prettierrc",
-      "eslint --fix --no-error-on-unmatched-pattern"
+    "*.{md,mdx}": [
+      "opx lint --fix"
     ],
     ".github/renovate.json": [
       "yarn dlx --package renovate -- renovate-config-validator"
