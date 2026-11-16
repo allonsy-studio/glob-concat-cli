@@ -1,4 +1,4 @@
-# glob-concat-cli
+# @allons-y/glob-concat-cli
 
 A command-line tool that concatenates files matched by [fast-glob] patterns, writing to
 a file or to stdout, and emitting a sourcemap by default. Empty files are skipped

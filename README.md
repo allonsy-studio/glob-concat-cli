@@ -9,7 +9,7 @@
 
 <img src="https://repository-images.githubusercontent.com/690650165/91f13310-76b3-43ff-b7ab-53daa21a90ce" alt=""/>
 
-# glob-concat-cli
+# @allons-y/glob-concat-cli
 
 > A command-line interface for concatenating files leveraging [fast-glob](https://github.com/mrmlnc/fast-glob#fast-glob).
 
@@ -24,12 +24,14 @@
 ## Install
 
 ```sh
-npm install --dev glob-concat-cli
+npm install --dev @allons-y/glob-concat-cli
 ```
 
 ```sh
-yarn add --dev glob-concat-cli
+yarn add --dev @allons-y/glob-concat-cli
 ```
+
+This package was published as `glob-concat-cli` before it moved to the `@allons-y` scope. The `glob-concat` command is unchanged.
 
 This project supports Node 24 & 26. Node 22 is no longer supported: it entered maintenance on 2025-10-21 & reaches end of life on 2027-04-30. Support follows the [Node.js release schedule](https://github.com/nodejs/Release#release-schedule): Node 24 (in maintenance since 2026-10-20) is supported until its end of life on 2028-04-30, & Node 26 (LTS since 2026-10-28) until 2029-04-30.
 
