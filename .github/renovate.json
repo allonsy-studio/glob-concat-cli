@@ -25,7 +25,7 @@
 			"matchPackageNames": ["changesets/action"]
 		}
 	],
-	"rebaseWhen": "behind-base-branch",
+	"rebaseWhen": "conflicted",
 	"reviewers": ["castastrophe"],
 	"lockFileMaintenance": {
 		"enabled": true,
