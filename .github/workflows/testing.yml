@@ -18,13 +18,13 @@ jobs:
         node: [26, 24]
     steps:
       - name: Check out code
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: Enable Corepack
         run: corepack enable
 
       - name: Use Node ${{ matrix.node }}
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           cache: yarn
           node-version: ${{ matrix.node }}
@@ -40,7 +40,7 @@ jobs:
         if: matrix.node == 26
         run: yarn coverage
 
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: matrix.node == 26
         with:
           name: coverage-data-${{ github.run_id }}
@@ -49,7 +49,7 @@ jobs:
 
       - name: Coverage summary
         if: matrix.node == 26
-        uses: irongut/CodeCoverageSummary@v1.3.0
+        uses: irongut/CodeCoverageSummary@51cc3a756ddcd398d447c044c02cb6aa83fdae95 # v1.3.0
         with:
           filename: coverage/cobertura-coverage.xml
           format: "markdown"
@@ -57,7 +57,7 @@ jobs:
 
       - name: Add coverage PR comment
         if: matrix.node == 26
-        uses: marocchino/sticky-pull-request-comment@v3.0.4
+        uses: marocchino/sticky-pull-request-comment@0ea0beb66eb9baf113663a64ec522f60e49231c0 # v3.0.4
         with:
           recreate: true
           path: code-coverage-results.md
@@ -78,7 +78,7 @@ jobs:
         node-version: [24]
     steps:
       - name: Check out code
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           fetch-depth: 0
 
@@ -86,7 +86,7 @@ jobs:
         run: corepack enable
 
       - name: Use Node LTS version
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: ${{ matrix.node-version }}
           cache: yarn
@@ -95,7 +95,7 @@ jobs:
       - name: Check for cached dependencies
         continue-on-error: true
         id: cache-dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5
         with:
           path: |
             .cache/yarn
@@ -110,14 +110,14 @@ jobs:
 
       - name: Get changed files
         id: changed-files
-        uses: step-security/changed-files@v47
+        uses: step-security/changed-files@2e07db73e5ccdb319b9a6c7766bd46d39d304bad # v47
         with:
           files_yaml: |
             eslint:
               - '*.js'
 
       - name: Run eslint
-        uses: reviewdog/action-eslint@v1.34.0
+        uses: reviewdog/action-eslint@556a3fdaf8b4201d4d74d406013386aa4f7dab96 # v1.34.0
         if: ${{ steps.changed-files.outputs.eslint_added_files != '' || steps.changed-files.outputs.eslint_modified_files != '' }}
         with:
           fail_level: error
