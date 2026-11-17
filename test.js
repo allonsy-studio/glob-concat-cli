@@ -30,7 +30,7 @@ test.serial("concatenate two files", async (t) => {
 		globConcat(
 			["./fixtures/file-1.md", "./fixtures/file-2.md"],
 			"./expected/concat.md",
-			{ fs: fs },
+			{ fs },
 		)
 			.then((result) => {
 				t.is(
@@ -50,7 +50,7 @@ test.serial("concatenate two files", async (t) => {
 test.serial("concatenate with globs", async (t) => {
 	const output = "./expected/concat.md";
 	return (
-		globConcat(["./fixtures/*.md"], output, { fs: fs })
+		globConcat(["./fixtures/*.md"], output, { fs })
 			.then((result) => {
 				t.is(
 					result.inputFiles.length,
@@ -69,7 +69,7 @@ test.serial("concatenate with globs", async (t) => {
 
 test.serial("concatenate with globs to stdout", async (t) => {
 	return (
-		globConcat(["./fixtures/*.css"], undefined, { fs: fs })
+		globConcat(["./fixtures/*.css"], undefined, { fs })
 			.then((result) => {
 				t.is(
 					result.inputFiles.length,
@@ -94,7 +94,7 @@ test.serial("empty file with error", async (t) => {
 	const output = "./expected/concat.md";
 	return globConcat(["./fixtures/file-empty.md"], output, {
 		allowEmpty: false,
-		fs: fs,
+		fs,
 	})
 		.then((result) => {
 			t.is(result.content, readFile("./expected/concat.md"), "content matches");
@@ -109,7 +109,7 @@ test.serial("empty file with error", async (t) => {
 });
 
 test.serial("no file input provided to script", async (t) => {
-	return globConcat([], undefined, { allowEmpty: false, fs: fs })
+	return globConcat([], undefined, { allowEmpty: false, fs })
 		.then(() => t.fail("no input files should throw an error"))
 		.catch((error) => {
 			t.is(error.message, MESSAGES.no_input_files);
